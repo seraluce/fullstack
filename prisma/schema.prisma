@@ -1,12 +1,9 @@
-// Prisma schema for the template (Prisma ORM 7).
+// Prisma schema for the template (Prisma ORM 7) with PostgreSQL (Neon).
 //
 // In Prisma 7 the connection URL lives in `prisma.config.ts` (not here), and
 // the client is generated to a local output path via the `prisma-client`
 // generator. The runtime connection is made through a driver adapter — see
 // `src/lib/prisma.ts`.
-//
-// To switch to PostgreSQL: change `provider` to "postgresql", install
-// `@prisma/adapter-pg` + `pg`, and update `src/lib/prisma.ts`.
 
 generator client {
   provider = "prisma-client"
@@ -14,7 +11,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {

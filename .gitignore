@@ -45,11 +45,6 @@ next-env.d.ts
 
 # prisma — generated client is regenerated via `pnpm db:generate`
 /src/generated
-# local sqlite databases
-*.db
-*.db-journal
-prisma/dev.db
-prisma/dev.db-journal
 
 # playwright
 /test-results/

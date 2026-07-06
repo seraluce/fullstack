@@ -8,4 +8,3 @@ onlyBuiltDependencies:
   - esbuild
   - "@swc/core"
   - "@parcel/watcher"
-  - better-sqlite3
