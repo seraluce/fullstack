@@ -201,6 +201,105 @@ pnpm dlx shadcn@latest add <组件名>
 4. **新增语言**：修改 `src/i18n/routing.ts` 的 `locales`，并创建对应翻译文件。
 5. **数据库变更**：修改 `prisma/schema.prisma` 后运行 `pnpm db:push` 或 `pnpm db:migrate`。
 
+## 部署指南
+
+### 当前模板的部署限制
+
+本模板使用 **Prisma + better-sqlite3**（原生 Node.js 模块），这对部署平台有一定要求：
+
+| 平台                | 是否直接支持 | 说明                                                                 |
+|---------------------|-------------|----------------------------------------------------------------------|
+| **Vercel**          | ✅ 完全支持 | Next.js 官方平台，原生支持 Node.js 原生模块                          |
+| **Railway**         | ✅ 完全支持 | 全栈平台，支持 Node.js 原生模块，提供 PostgreSQL 免费层              |
+| **Render**          | ✅ 完全支持 | 支持 Node.js，提供 PostgreSQL 免费层                                |
+| **Fly.io**          | ✅ 完全支持 | 容器化部署，完全控制环境                                            |
+| **Docker + VPS**    | ✅ 完全支持 | 最灵活，适合自定义配置                                              |
+| **Cloudflare Pages** | ❌ 不支持 | Edge/Node.js 运行时不支持 `better-sqlite3` 原生模块                  |
+| **Netlify**         | ⚠️ 有限支持 | 需要配置 `@netlify/plugin-nextjs`，且原生模块支持不稳定              |
+
+### ✅ 推荐部署方案
+
+#### 方案一：Vercel（最推荐）
+
+```bash
+# 安装 Vercel CLI
+pnpm add -g vercel
+
+# 登录并部署
+vercel login
+vercel
+```
+
+**生产环境建议**：将 SQLite 切换为 PostgreSQL（Vercel 提供免费 PostgreSQL 试用）。
+
+#### 方案二：Railway
+
+```bash
+# 安装 Railway CLI
+pnpm add -g @railway/cli
+
+# 登录并部署
+railway login
+railway init
+railway up
+```
+
+在 Railway 控制台添加环境变量，并创建 PostgreSQL 数据库。
+
+#### 方案三：Render
+
+1. 在 [Render](https://render.com) 创建 Web Service
+2. 连接 GitHub 仓库
+3. 设置：
+   - Build Command：`pnpm install && pnpm db:generate && pnpm build`
+   - Start Command：`pnpm start`
+4. 添加环境变量
+
+### ⚠️ Cloudflare Pages 部署（需改造）
+
+如果一定要部署到 Cloudflare Pages，需要做以下改造：
+
+**步骤 1：移除 better-sqlite3 相关依赖**
+
+```bash
+pnpm remove @prisma/adapter-better-sqlite3 better-sqlite3 @types/better-sqlite3
+```
+
+**步骤 2：切换数据库方案**
+
+**方案 A：使用 Cloudflare D1（推荐）**
+
+```bash
+pnpm add drizzle-orm @cloudflare/d1
+pnpm add -D drizzle-kit
+```
+
+然后用 drizzle-orm 替代 Prisma，配置 D1 绑定。
+
+**方案 B：使用外部 PostgreSQL**
+
+```bash
+pnpm add @prisma/adapter-pg pg @types/pg
+```
+
+修改 `src/lib/prisma.ts` 使用 `PrismaPg` 适配器。
+
+**步骤 3：调整 `prisma.config.ts`**
+
+移除驱动适配器相关配置，使用外部数据库 URL。
+
+**步骤 4：配置 Cloudflare Pages**
+
+设置构建命令：`pnpm install && pnpm db:generate && pnpm build`，并添加环境变量。
+
+### 生产环境配置清单
+
+- [ ] 设置 `AUTH_SECRET`（使用 `openssl rand -base64 32` 生成）
+- [ ] 设置 `AUTH_URL` 为生产域名
+- [ ] 切换数据库为 PostgreSQL（推荐）
+- [ ] 配置 HTTPS（所有平台默认支持）
+- [ ] 设置 `NEXT_PUBLIC_APP_NAME`
+
 ## 许可证
 
 MIT — 可自由使用作为项目起点。
