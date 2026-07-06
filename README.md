@@ -1,198 +1,206 @@
-# Next.js Full-Stack Template
+# Next.js 全栈模板
 
-A production-ready **Next.js 16** starter wired with i18n, authentication, Prisma, Zustand, testing, and code-quality tooling. Clone it and start building — no scaffolding required.
+一个开箱即用的 **Next.js 16** 全栈模板，集成了国际化、认证、数据库、状态管理、测试和代码质量工具。克隆即可开始开发，无需从头搭建。
 
-## Tech Stack
+## 技术栈
 
-| Area            | Choice                                                                                             |
-| --------------- | -------------------------------------------------------------------------------------------------- |
-| Framework       | [Next.js 16](https://nextjs.org) (App Router, Turbopack)                                           |
-| Language        | TypeScript 5                                                                                       |
-| UI              | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) (radix-nova style) |
-| i18n            | [next-intl](https://next-intl-docs.vercel.app) (`en` / `zh`)                                       |
-| Auth            | [Auth.js v5](https://authjs.dev) (NextAuth, JWT + Credentials)                                     |
-| ORM             | [Prisma 7](https://www.prisma.io) + better-sqlite3 (driver adapter)                                |
-| State           | [Zustand](https://github.com/pmndrs/zustand) (with `persist`)                                      |
-| Unit tests      | [Vitest](https://vitest.dev) + Testing Library                                                     |
-| E2E tests       | [Playwright](https://playwright.dev)                                                               |
-| Lint / Format   | ESLint (flat config) + Prettier + `prettier-plugin-tailwindcss`                                    |
-| Git hooks       | Husky + lint-staged + commitlint (conventional)                                                    |
-| Package manager | pnpm                                                                                               |
+| 领域            | 技术选型                                              |
+| --------------- | ----------------------------------------------------- |
+| 框架            | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
+| 语言            | TypeScript 5                                          |
+| UI              | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) (radix-nova 风格) |
+| 国际化          | [next-intl](https://next-intl-docs.vercel.app) (`en` / `zh`) |
+| 认证            | [Auth.js v5](https://authjs.dev) (NextAuth, JWT + Credentials) |
+| ORM             | [Prisma 7](https://www.prisma.io) + better-sqlite3 (驱动适配器) |
+| 状态管理        | [Zustand](https://github.com/pmndrs/zustand) (带 `persist` 中间件) |
+| 单元测试        | [Vitest](https://vitest.dev) + Testing Library        |
+| E2E 测试        | [Playwright](https://playwright.dev)                  |
+| 代码规范        | ESLint (flat config) + Prettier + `prettier-plugin-tailwindcss` |
+| Git 钩子        | Husky + lint-staged + commitlint (约定式提交)         |
+| 包管理器        | pnpm                                                  |
 
-## Quick Start
+## 快速开始
 
 ```bash
-# 1. Clone the template
-git clone <your-repo-url> my-app
+# 1. 克隆模板
+git clone https://github.com/seraluce/fullstack.git my-app
 cd my-app
 
-# 2. Install dependencies
+# 2. 安装依赖
 pnpm install
 
-# 3. Configure environment
+# 3. 配置环境变量
 cp .env.example .env
-# Edit .env — at minimum set AUTH_SECRET (use `openssl rand -base64 32`)
+# 编辑 .env — 至少设置 AUTH_SECRET (使用 `openssl rand -base64 32` 生成)
 
-# 4. Set up the database
-pnpm db:generate   # generate the Prisma client
-pnpm db:push       # create tables (SQLite)
-pnpm db:seed       # seed demo user + posts
+# 4. 设置数据库
+pnpm db:generate   # 生成 Prisma 客户端
+pnpm db:push       # 创建表结构 (SQLite)
+pnpm db:seed       # 填充演示用户和帖子数据
 
-# 5. Run the dev server
+# 5. 启动开发服务器
 pnpm dev
 ```
 
-Open <http://localhost:3000>. You'll be redirected to `/en`.
+打开 <http://localhost:3000>，会自动跳转到 `/zh` 中文页面。
 
-**Demo login:** `demo@example.com` / `demo1234`
+**演示账号：** `demo@example.com` / `demo1234`
 
-## Available Scripts
+## 可用脚本
 
 ```bash
-pnpm dev              # start dev server (Turbopack)
-pnpm build            # production build
-pnpm start            # run the production build
-pnpm typecheck        # tsc --noEmit
-pnpm lint             # eslint .
-pnpm lint:fix         # eslint . --fix
-pnpm format           # prettier --write .
-pnpm format:check     # prettier --check .
+pnpm dev              # 启动开发服务器 (Turbopack)
+pnpm build            # 生产构建
+pnpm start            # 运行生产构建
+pnpm typecheck        # TypeScript 类型检查
+pnpm lint             # ESLint 检查
+pnpm lint:fix         # ESLint 自动修复
+pnpm format           # Prettier 格式化代码
+pnpm format:check     # Prettier 检查格式
 
-pnpm test             # vitest (watch)
-pnpm test:run         # vitest run (CI mode)
-pnpm test:ui          # vitest --ui
-pnpm test:e2e         # playwright test
-pnpm test:e2e:ui      # playwright test --ui
+pnpm test             # Vitest 监听模式
+pnpm test:run         # Vitest 单次运行 (CI 模式)
+pnpm test:ui          # Vitest UI 界面
+pnpm test:e2e         # Playwright E2E 测试
+pnpm test:e2e:ui      # Playwright UI 界面
 
-pnpm db:generate      # prisma generate
-pnpm db:push          # push schema to DB (dev)
-pnpm db:seed          # seed demo data
-pnpm db:studio        # prisma studio
-pnpm db:migrate       # prisma migrate dev
-pnpm db:reset         # prisma migrate reset
+pnpm db:generate      # 生成 Prisma 客户端
+pnpm db:push          # 推送 schema 到数据库 (开发用)
+pnpm db:seed          # 填充演示数据
+pnpm db:studio        # 打开 Prisma Studio
+pnpm db:migrate       # 创建迁移
+pnpm db:reset         # 重置数据库
 ```
 
-## Project Structure
+## 项目结构
 
 ```
 .
-├── messages/                 # i18n translation files (en.json, zh.json)
+├── messages/                 # 国际化翻译文件 (en.json, zh.json)
 ├── prisma/
-│   ├── schema.prisma         # Prisma 7 schema (User, Account, Session, Post, …)
-│   └── seed.ts               # demo data seeder
-├── prisma.config.ts          # Prisma 7 datasource URL + driver adapter config
-├── public/                   # static assets
+│   ├── schema.prisma         # Prisma 7 数据模型 (User, Account, Session, Post, …)
+│   └── seed.ts               # 演示数据填充脚本
+├── prisma.config.ts          # Prisma 7 数据源 URL + 驱动适配器配置
+├── public/                   # 静态资源
 ├── src/
 │   ├── app/
-│   │   ├── [locale]/         # localized routes (en, zh)
-│   │   │   ├── layout.tsx    # root layout (html/body, providers)
-│   │   │   ├── page.tsx      # home / landing
-│   │   │   ├── login/        # auth login flow (server action)
-│   │   │   ├── dashboard/    # protected page (requireAuth + Prisma + Zustand)
-│   │   │   └── not-found.tsx
+│   │   ├── [locale]/         # 国际化路由 (en, zh)
+│   │   │   ├── layout.tsx    # 根布局 (html/body, providers)
+│   │   │   ├── page.tsx      # 首页
+│   │   │   ├── login/        # 登录流程 (服务端 Action)
+│   │   │   ├── dashboard/    # 受保护页面 (requireAuth + Prisma + Zustand)
+│   │   │   └── not-found.tsx # 404 页面
 │   │   └── api/
-│   │       ├── auth/[...nextauth]/route.ts   # Auth.js handlers
-│   │       └── posts/route.ts                # example REST API
-│   ├── auth.ts               # NextAuth config (Credentials + JWT)
-│   ├── components/           # app components + shadcn/ui primitives
-│   ├── i18n/                 # next-intl routing, request, navigation
+│   │       ├── auth/[...nextauth]/route.ts   # Auth.js 处理器
+│   │       └── posts/route.ts                # REST API 示例
+│   ├── auth.ts               # NextAuth 配置 (Credentials + JWT)
+│   ├── components/           # 应用组件 + shadcn/ui 基础组件
+│   ├── i18n/                 # next-intl 路由、请求、导航配置
 │   ├── lib/
-│   │   ├── prisma.ts         # PrismaClient singleton (driver adapter)
-│   │   ├── auth-guard.ts     # requireAuth() helper
-│   │   ├── actions/          # shared server actions
-│   │   └── utils.ts          # cn() helper
-│   ├── store/                # Zustand stores
-│   ├── types/                # ambient type augmentations
-│   ├── generated/            # Prisma client output (gitignored)
-│   └── proxy.ts              # Next.js 16 proxy (was middleware.ts)
+│   │   ├── prisma.ts         # PrismaClient 单例 (驱动适配器)
+│   │   ├── auth-guard.ts     # requireAuth() 辅助函数
+│   │   ├── actions/          # 共享服务端 Actions
+│   │   └── utils.ts          # cn() 工具函数
+│   ├── store/                # Zustand 状态仓库
+│   ├── types/                # 类型声明扩展
+│   ├── generated/            # Prisma 客户端输出 (gitignored)
+│   └── proxy.ts              # Next.js 16 代理 (原 middleware.ts)
 ├── tests/
-│   ├── setup.ts              # vitest setup (jest-dom, cleanup)
-│   ├── unit/                 # vitest specs
-│   └── e2e/                  # playwright specs
+│   ├── setup.ts              # Vitest 配置 (jest-dom, cleanup)
+│   ├── unit/                 # Vitest 单测
+│   └── e2e/                  # Playwright E2E 测试
 ├── eslint.config.mjs         # ESLint flat config
-├── .prettierrc.json
-├── .lintstagedrc.json
-├── commitlint.config.json
-├── vitest.config.ts
-├── playwright.config.ts
-├── components.json           # shadcn/ui config
-└── next.config.ts
+├── .prettierrc.json          # Prettier 配置
+├── .lintstagedrc.json        # lint-staged 配置
+├── commitlint.config.json    # commitlint 配置
+├── vitest.config.ts          # Vitest 配置
+├── playwright.config.ts      # Playwright 配置
+├── components.json           # shadcn/ui 配置
+└── next.config.ts            # Next.js 配置
 ```
 
-## Feature Walkthroughs
+## 功能详解
 
-### Internationalization (next-intl)
+### 国际化 (next-intl)
 
-- Locales are declared once in [`src/i18n/routing.ts`](src/i18n/routing.ts) and flow through the proxy, navigation helpers, and the typed `<Link>`.
-- Add a new locale by extending `locales` and creating a matching `messages/<locale>.json`.
-- All URLs are locale-prefixed (`/en/...`, `/zh/...`) via `localePrefix: "always"`.
-- Server components fetch translations with `getTranslations` / `getMessages`; client components use `NextIntlClientProvider` + `useTranslations`.
+- 语言配置集中在 [`src/i18n/routing.ts`](src/i18n/routing.ts)，自动应用到代理、导航助手和类型安全的 `<Link>`。
+- 新增语言只需扩展 `locales` 数组并创建对应的 `messages/<locale>.json`。
+- 所有 URL 都带语言前缀 (`/en/...`, `/zh/...`)，配置为 `localePrefix: "always"`。
+- 服务端组件使用 `getTranslations` / `getMessages` 获取翻译；客户端组件通过 `NextIntlClientProvider` + `useTranslations`。
 
-### Authentication (Auth.js v5)
+### 认证 (Auth.js v5)
 
-- Config lives in [`src/auth.ts`](src/auth.ts) — JWT sessions + a Credentials provider backed by the Prisma `User` table.
-- The Prisma schema already ships `Account`, `Session`, and `VerificationToken` models so you can drop in the Prisma adapter or OAuth providers later.
-- **Route protection is intentionally not done in `proxy.ts`.** Every protected page/layout calls `requireAuth(locale)` from [`src/lib/auth-guard.ts`](src/lib/auth-guard.ts). This keeps protection explicit and resilient to proxy matcher changes.
-- Login flow uses a React 19 `useActionState` server action in [`src/app/[locale]/login/actions.ts`](src/app/[locale]/login/actions.ts).
+- 配置位于 [`src/auth.ts`](src/auth.ts) — JWT 会话 + Credentials 提供者，基于 Prisma `User` 表验证。
+- Prisma schema 已包含 `Account`、`Session`、`VerificationToken` 模型，方便后续接入 Prisma adapter 或 OAuth 提供者。
+- **路由保护不在 `proxy.ts` 中实现。** 每个受保护页面/布局都调用 [`src/lib/auth-guard.ts`](src/lib/auth-guard.ts) 的 `requireAuth(locale)`。这样保护逻辑显式且不受代理匹配规则变更影响。
+- 登录流程使用 React 19 `useActionState` 服务端 Action，位于 [`src/app/[locale]/login/actions.ts`](src/app/[locale]/login/actions.ts)。
 
-### Database (Prisma 7)
+### 数据库 (Prisma 7)
 
-- **Prisma 7 breaking changes are handled:**
-  - The datasource `url` lives in [`prisma.config.ts`](prisma.config.ts) (not in `schema.prisma`).
-  - A driver adapter (`@prisma/adapter-better-sqlite3`) is mandatory and wired in [`src/lib/prisma.ts`](src/lib/prisma.ts).
-  - The generator uses `provider = "prisma-client"` with an explicit `output` path; the client is imported from `@/generated/prisma/client`.
-- To switch databases, swap the adapter in `src/lib/prisma.ts` and `prisma/seed.ts` (e.g. `@prisma/adapter-pg`) and update `prisma.config.ts`.
+- **Prisma 7 重要变更已处理：**
+  - 数据源 `url` 位于 [`prisma.config.ts`](prisma.config.ts)（不在 `schema.prisma` 中）。
+  - 驱动适配器 (`@prisma/adapter-better-sqlite3`) 是必需的，已在 [`src/lib/prisma.ts`](src/lib/prisma.ts) 中配置。
+  - 生成器使用 `provider = "prisma-client"` 并指定 `output` 路径；客户端从 `@/generated/prisma/client` 导入。
+- 切换数据库时，修改 `src/lib/prisma.ts` 和 `prisma/seed.ts` 的适配器（如 `@prisma/adapter-pg`），并更新 `prisma.config.ts`。
 
-### State (Zustand)
+### 状态管理 (Zustand)
 
-- Example store in [`src/store/counter-store.ts`](src/store/counter-store.ts) shows the `persist` middleware with `localStorage`.
-- Consumed by [`src/components/counter-demo.tsx`](src/components/counter-demo.tsx), which is rendered on the protected dashboard.
+- 示例仓库 [`src/store/counter-store.ts`](src/store/counter-store.ts) 展示 `persist` 中间件配合 `localStorage`。
+- 由 [`src/components/counter-demo.tsx`](src/components/counter-demo.tsx) 消费，在受保护的仪表盘页面中展示。
 
-### API Routes
+### API 路由
 
-- Example REST endpoint at [`src/app/api/posts/route.ts`](src/app/api/posts/route.ts):
-  - `GET /api/posts` — list published posts (public)
-  - `POST /api/posts` — create a post (requires auth via `auth()`)
+- 示例 REST 端点 [`src/app/api/posts/route.ts`](src/app/api/posts/route.ts)：
+  - `GET /api/posts` — 获取已发布的帖子列表（公开）
+  - `POST /api/posts` — 创建帖子（需要认证，通过 `auth()` 验证）
 
-### Code Quality
+### 代码质量
 
-- **ESLint** flat config extends `eslint-config-next` (core-web-vitals + TypeScript).
-- **Prettier** with `prettier-plugin-tailwindcss` for automatic class sorting.
-- **Husky** hooks:
-  - `pre-commit` → runs `lint-staged` (eslint --fix + prettier --write on staged files)
-  - `commit-msg` → runs `commitlint` (conventional commits enforced)
-- Commit types: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`.
+- **ESLint** flat config 继承 `eslint-config-next` (core-web-vitals + TypeScript)。
+- **Prettier** 配合 `prettier-plugin-tailwindcss` 自动排序 Tailwind 类名。
+- **Husky** Git 钩子：
+  - `pre-commit` → 运行 `lint-staged`（对暂存文件执行 eslint --fix + prettier --write）
+  - `commit-msg` → 运行 `commitlint`（强制约定式提交）
+- 提交类型：`build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`。
 
-## Environment Variables
+## 环境变量
 
-Copy [`.env.example`](.env.example) to `.env` and fill in:
+复制 [`.env.example`](.env.example) 为 `.env` 并填写：
 
-| Variable               | Description                    | Example                   |
-| ---------------------- | ------------------------------ | ------------------------- |
-| `DATABASE_URL`         | Prisma datasource URL          | `file:./dev.db`           |
-| `AUTH_SECRET`          | NextAuth JWT secret (required) | `openssl rand -base64 32` |
-| `AUTH_URL`             | App URL (production)           | `http://localhost:3000`   |
-| `NEXT_PUBLIC_APP_NAME` | Public app name (client-safe)  | `Next.js Template`        |
+| 变量名              | 说明                                  | 示例                    |
+| ------------------- | ------------------------------------- | ----------------------- |
+| `DATABASE_URL`      | Prisma 数据源 URL                      | `file:./dev.db`         |
+| `AUTH_SECRET`       | NextAuth JWT 密钥（必需）              | `openssl rand -base64 32` |
+| `AUTH_URL`          | 应用 URL（生产环境）                   | `http://localhost:3000` |
+| `NEXT_PUBLIC_APP_NAME` | 应用名称（客户端可见）             | `Next.js Template`      |
 
-## Next.js 16 Notes
+## Next.js 16 重要变更
 
-This template already accounts for Next.js 16 breaking changes:
+此模板已适配 Next.js 16 的重大变更：
 
-- **`middleware.ts` → `proxy.ts`**: see [`src/proxy.ts`](src/proxy.ts) (function named `proxy`).
-- **Async Request APIs**: `cookies()`, `headers()`, `params`, and `searchParams` are all awaited in this codebase.
-- **Turbopack by default**: enabled, with `experimental.turbopackFileSystemCacheForDev`.
-- **ESLint Flat Config** is the default (`eslint.config.mjs`).
-- `next lint` is removed — run `pnpm lint` (ESLint CLI) instead.
+- **`middleware.ts` → `proxy.ts`**：见 [`src/proxy.ts`](src/proxy.ts)（函数名为 `proxy`）。
+- **异步请求 API**：`cookies()`、`headers()`、`params`、`searchParams` 都已正确 await。
+- **Turbopack 默认启用**：配置了 `experimental.turbopackFileSystemCacheForDev`。
+- **ESLint Flat Config**：默认使用 (`eslint.config.mjs`)。
+- `next lint` 已移除 — 直接运行 `pnpm lint`（ESLint CLI）。
 
-## Adding shadcn/ui Components
+## 添加 shadcn/ui 组件
 
 ```bash
-pnpm dlx shadcn@latest add <component>
-# e.g. pnpm dlx shadcn@latest add dialog
+pnpm dlx shadcn@latest add <组件名>
+# 例如：pnpm dlx shadcn@latest add dialog
 ```
 
-Config is in [`components.json`](components.json) (style: `radix-nova`, base color: `neutral`).
+配置位于 [`components.json`](components.json)（风格：`radix-nova`，基础色：`neutral`）。
 
-## License
+## 开发建议
 
-MIT — use freely as a starter.
+1. **新增页面**：在 `src/app/[locale]/` 下创建文件夹，自动继承国际化布局。
+2. **新增 API**：在 `src/app/api/` 下创建路由，使用 `auth()` 验证用户身份。
+3. **新增状态**：在 `src/store/` 创建 Zustand 仓库，可选 `persist` 中间件。
+4. **新增语言**：修改 `src/i18n/routing.ts` 的 `locales`，并创建对应翻译文件。
+5. **数据库变更**：修改 `prisma/schema.prisma` 后运行 `pnpm db:push` 或 `pnpm db:migrate`。
+
+## 许可证
+
+MIT — 可自由使用作为项目起点。
