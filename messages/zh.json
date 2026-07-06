@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Next.js 全栈模板",
+    "description": "基于 Next.js 16 的生产级模板，集成 i18n、认证、Prisma 等。"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "控制台",
+    "login": "登录",
+    "logout": "退出登录",
+    "docs": "文档"
+  },
+  "theme": {
+    "toggle": "切换主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
+  },
+  "home": {
+    "title": "Next.js 全栈模板",
+    "subtitle": "克隆 · 配置 · 上线",
+    "description": "生产级脚手架，预集成国际化、认证、Prisma、Zustand、测试与代码质量工具。",
+    "cta": "立即开始",
+    "secondaryCta": "在 GitHub 查看",
+    "featuresTitle": "已集成能力",
+    "features": {
+      "i18n": "基于 next-intl 的国际化",
+      "auth": "基于 Auth.js v5 的认证",
+      "db": "基于 Prisma 的数据访问",
+      "ui": "shadcn/ui + Tailwind v4 组件",
+      "state": "Zustand 客户端状态",
+      "test": "Vitest + Playwright 单元与 E2E 测试",
+      "quality": "代码规范、格式化与提交约定"
+    }
+  },
+  "login": {
+    "title": "登录",
+    "email": "邮箱",
+    "emailPlaceholder": "you@example.com",
+    "password": "密码",
+    "passwordPlaceholder": "••••••••",
+    "submit": "登录",
+    "loading": "登录中…",
+    "demoHint": "示例账号：demo@example.com / demo1234",
+    "errors": {
+      "invalid": "邮箱或密码错误。",
+      "generic": "发生错误，请重试。"
+    }
+  },
+  "dashboard": {
+    "title": "控制台",
+    "welcome": "欢迎回来，{name} 👋",
+    "protected": "这是一个受保护页面，仅登录用户可见。",
+    "postsTitle": "最近的帖子",
+    "noPosts": "暂无帖子。",
+    "counter": "Zustand 计数器",
+    "increment": "增加",
+    "decrement": "减少",
+    "reset": "重置"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在。",
+    "back": "返回首页"
+  }
+}
